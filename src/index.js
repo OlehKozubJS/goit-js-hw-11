@@ -9,7 +9,6 @@ var URL = "https://pixabay.com/api/?key="+API_KEY+"&q=searchResult&image_type=ph
 const searchForm = document.querySelector(".search-form");
 const searchInput = document.getElementsByName("searchQuery")[0];
 const gallery = document.querySelector(".gallery");
-const photoCard = document.querySelector(".photo-card").outerHTML;
 
 searchForm.addEventListener("submit", fetchImagesLogic);
 
@@ -22,7 +21,25 @@ async function fetchImagesLogic(e) {
     const data = await fetchImages(searchInput.value);
     console.log(data);
     data.hits.forEach (hit => {
-      gallery.insertAdjacentHTML("beforeend", photoCard.replace("img alt", `img src="${hit.previewURL}" alt`));
+      const newPhotoCard = `
+        <div class="photo-card">
+            <img img src="${hit.previewURL}" alt="Image" loading="lazy" />
+            <div class="info">
+                <p class="info-item">
+                  <b>${hit.likes} Likes</b>
+                </p>
+                <p class="info-item">
+                  <b>${hit.views} Views</b>
+                </p>
+                <p class="info-item">
+                  <b>${hit.comments} Comments</b>
+                </p>
+                <p class="info-item">
+                  <b>${hit.downloads} Downloads</b>
+                </p>
+              </div>
+          </div>`;
+      gallery.insertAdjacentHTML("beforeend", newPhotoCard);
     });
   }
   catch {
