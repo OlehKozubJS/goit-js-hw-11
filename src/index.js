@@ -60,3 +60,13 @@ window.scrollBy({
   top: cardHeight * 2,
   behavior: "smooth",
 });
+
+/*
+let instance = new SimpleLightbox('.gallery a', 
+    {
+        captionsData: "alt",
+        captionDelay: 250,
+        disableScroll: false,
+    }
+);
+*/
