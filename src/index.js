@@ -53,3 +53,12 @@ async function fetchImages(searchResult) {
   const response = await fetch(URL.replace("searchResult", encodeURIComponent(searchResult)));
   return await response.json();
 }
+
+const { height: cardHeight } = document
+  .querySelector(".gallery")
+  .firstElementChild.getBoundingClientRect();
+
+window.scrollBy({
+  top: cardHeight * 2,
+  behavior: "smooth",
+});
