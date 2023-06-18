@@ -1,6 +1,4 @@
-// Описаний в документації
 import SimpleLightbox from "simplelightbox";
-// Додатковий імпорт стилів
 import "simplelightbox/dist/simple-lightbox.min.css";
 
 var API_KEY = '37447910-ed3fb6b843fd00e4ff71a16f5';
@@ -120,8 +118,4 @@ window.scrollBy({
   behavior: "smooth",
 });
 */
-
-/**
- * "We're sorry, but you've reached the end of search results."
- */
 
