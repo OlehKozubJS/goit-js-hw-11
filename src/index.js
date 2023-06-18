@@ -62,13 +62,12 @@ async function loadMoreFunc() {
 }
 
 async function fetchImagesLogic() {
-  gallery.innerHTML = "";
-
   let data = await fetchImages(searchInputValue);
-  console.log(data);
+
+  let photoCards = "";
 
   data.hits.forEach (hit => {
-    const newPhotoCard = `<a href="${hit.largeImageURL}">
+    photoCards += `<a href="${hit.largeImageURL}">
       <div class="photo-card">
           <img src="${hit.previewURL}" alt="Image" loading="lazy" data-imgInfo="${hit.likes} Likes, ${hit.views} Views, ${hit.comments} Comments, ${hit.downloads} Downloads" />
           <div class="info">
@@ -86,7 +85,7 @@ async function fetchImagesLogic() {
               </p>
             </div>
         </div></a>`;
-    gallery.insertAdjacentHTML("beforeend", newPhotoCard);
+    gallery.innerHTML = photoCards;
   });
     
   let instance = new SimpleLightbox('.gallery a', 
@@ -110,12 +109,4 @@ async function fetchImages(searchResult) {
   const response = await fetch(searchData);
   return await response.json();
 }
-/*
-const { height: cardHeight } = document.querySelector(".gallery").firstElementChild.getBoundingClientRect();
-
-window.scrollBy({
-  top: cardHeight * 2,
-  behavior: "smooth",
-});
-*/
 
