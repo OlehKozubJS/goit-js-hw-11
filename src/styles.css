@@ -6,16 +6,31 @@
     display: block;
 }
 
+.photo-card {
+    width: 350px;
+}
+
 a {
     text-decoration: none;
 }
 
 img {
-    width: 400px;
+    width: 100%;
 }
 
 .info {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.info-item {
+    width: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    text-align: center;
 }
 
 .gallery {

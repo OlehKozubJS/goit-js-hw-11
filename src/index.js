@@ -70,19 +70,19 @@ async function fetchImagesLogic() {
   data.hits.forEach (hit => {
     const newPhotoCard = `<a href="${hit.largeImageURL}">
       <div class="photo-card">
-          <img img src="${hit.previewURL}" alt="Image" loading="lazy" data-imgInfo="${hit.likes} Likes, ${hit.views} Views, ${hit.comments} Comments, ${hit.downloads} Downloads" />
+          <img src="${hit.previewURL}" alt="Image" loading="lazy" data-imgInfo="${hit.likes} Likes, ${hit.views} Views, ${hit.comments} Comments, ${hit.downloads} Downloads" />
           <div class="info">
               <p class="info-item">
-                <b>${hit.likes} Likes</b>
+                <b>Likes${hit.likes}</b>
               </p>
               <p class="info-item">
-                <b>${hit.views} Views</b>
+                <b>Views${hit.views} </b>
               </p>
               <p class="info-item">
-                <b>${hit.comments} Comments</b>
+                <b>Comments${hit.comments}</b>
               </p>
               <p class="info-item">
-                <b>${hit.downloads} Downloads</b>
+                <b>Downloads${hit.downloads} </b>
               </p>
             </div>
         </div></a>`;
