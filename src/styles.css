@@ -6,6 +6,18 @@
     display: block;
 }
 
+a {
+    text-decoration: none;
+}
+
+img {
+    width: 400px;
+}
+
+.info {
+    display: flex;
+}
+
 .gallery {
     display: flex;
     flex-wrap: wrap;
