@@ -26,8 +26,6 @@ async function searchFormFunc(e) {
   try {
     e.preventDefault();
 
-    loadMore.classList.replace("hidden", "visible");
-    noMoreLoads.classList.replace("visible", "hidden");
     perPageNum = 40;
     pageNum = 1;
 
@@ -41,6 +39,10 @@ async function searchFormFunc(e) {
       noMoreLoads.classList.replace("hidden", "visible");
       loadMore.classList.replace("visible", "hidden");
     }
+    else {
+      loadMore.classList.replace("hidden", "visible");
+      noMoreLoads.classList.replace("visible", "hidden");
+    }
   
     if (searchData.totalHits === 0) {
       galleryContainer.classList.add("hidden");
@@ -49,6 +51,7 @@ async function searchFormFunc(e) {
       
       Notify.failure("Sorry, there are no images matching your search query. Please try again.");
     }
+
     else {
       galleryContainer.classList.remove("hidden");
     }
