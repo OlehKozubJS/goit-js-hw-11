@@ -13,9 +13,9 @@ const gallery = document.querySelector(".gallery");
 const loadMore = document.querySelector(".load-more");
 const noMoreLoads = document.querySelector(".no-more-loads");
 
+let perPageNum = 40;
 let pageNum = 1;
 let searchInputValue;
-let perPageNum = 40;
 let searchData;
 let hitsLeft;
 
@@ -28,12 +28,9 @@ async function searchFormFunc(e) {
 
     perPageNum = 40;
     pageNum = 1;
-
     searchInputValue = searchInput.value;
- 
     searchData = await fetchImagesLogic();
     hitsLeft = searchData.totalHits;
-    console.log(searchData.totalHits);
 
     if (hitsLeft < 40) {
       noMoreLoads.classList.replace("hidden", "visible");
