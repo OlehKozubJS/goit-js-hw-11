@@ -1,8 +1,8 @@
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
 
-var API_KEY = '37447910-ed3fb6b843fd00e4ff71a16f5';
-var URL = "https://pixabay.com/api/?key="+API_KEY+"&q=searchResult&image_type=photo&orientation=horizontal&safesearch=true&page=pageNum&per_page=perPage";
+let API_KEY = '37447910-ed3fb6b843fd00e4ff71a16f5';
+let URL = "https://pixabay.com/api/?";
 
 const searchForm = document.querySelector(".search-form");
 const searchInput = document.getElementsByName("searchQuery")[0];
@@ -12,8 +12,8 @@ const noMoreLoads = document.querySelector(".no-more-loads");
 
 let pageNum = 1;
 let searchInputValue;
-let perPageVar = 40;
-let totalHitsVar;
+let perPageNum = 40;
+let totalHitsNum;
 let hitsLeft;
 
 searchForm.addEventListener("submit", searchFormFunc);
@@ -25,13 +25,13 @@ async function searchFormFunc(e) {
 
     loadMore.classList.replace("hidden", "visible");
     noMoreLoads.classList.replace("visible", "hidden");
-    perPageVar = 40;
+    perPageNum = 40;
     pageNum = 1;
 
     searchInputValue = searchInput.value;
  
-    totalHitsVar = Number(await fetchImagesLogic());
-    hitsLeft = totalHitsVar;
+    totalHitsNum = Number(await fetchImagesLogic());
+    hitsLeft = totalHitsNum;
     if (hitsLeft < 40) {
       noMoreLoads.classList.replace("hidden", "visible");
       loadMore.classList.replace("visible", "hidden");
@@ -51,7 +51,7 @@ async function loadMoreFunc() {
     if (hitsLeft < 40) {
       noMoreLoads.classList.replace("hidden", "visible");
       loadMore.classList.replace("visible", "hidden");
-      perPageVar = hitsLeft;
+      perPageNum = hitsLeft;
     }
 
     await fetchImagesLogic();
@@ -102,11 +102,17 @@ async function fetchImagesLogic() {
 }
 
 async function fetchImages(searchResult) {
-  searchData = URL.replace("searchResult", encodeURIComponent(searchResult));
-  searchData = searchData.replace("pageNum", pageNum + "");
-  searchData = searchData.replace("perPage", perPageVar);
+  const searchParams = new URLSearchParams({
+    key: API_KEY,
+    q: searchResult,
+    image_type: "photo",
+    orientation: "horizontal",
+    safesearch: true,
+    page: pageNum,
+    per_page: perPageNum,
+  });
 
-  const response = await fetch(searchData);
+  const response = await fetch(URL + searchParams);
   return await response.json();
 }
 

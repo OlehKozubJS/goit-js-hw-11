@@ -1,3 +1,5 @@
+/* Common settings */
+
 @import url('https://fonts.googleapis.com/css2?family=Parisienne&display=swap');
 
 body {
@@ -13,6 +15,11 @@ body {
     display: block;
 }
 
+header, main, footer {
+    padding-block: 25px;
+}
+
+/* Header (search form) settings */
 
 form {
     margin-block: 25px;
@@ -54,6 +61,8 @@ button:hover {
     color: white;
 }
 
+/* Main (gallery) settings */
+
 .photo-card {
     width: 350px;
 }
@@ -88,7 +97,7 @@ img {
     justify-content: space-evenly;
 }
 
-/* Loads adding section settings */
+/* Footer (images adding section) settings */
 
 .load-more-section {
     width: 500px;
