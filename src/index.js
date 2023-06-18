@@ -6,6 +6,7 @@ let URL = "https://pixabay.com/api/?";
 
 const searchForm = document.querySelector(".search-form");
 const searchInput = document.getElementsByName("searchQuery")[0];
+const galleryContainer = document.querySelector(".gallery-container");
 const gallery = document.querySelector(".gallery");
 const loadMore = document.querySelector(".load-more");
 const noMoreLoads = document.querySelector(".no-more-loads");
@@ -13,7 +14,7 @@ const noMoreLoads = document.querySelector(".no-more-loads");
 let pageNum = 1;
 let searchInputValue;
 let perPageNum = 40;
-let totalHitsNum;
+let searchData;
 let hitsLeft;
 
 searchForm.addEventListener("submit", searchFormFunc);
@@ -30,13 +31,27 @@ async function searchFormFunc(e) {
 
     searchInputValue = searchInput.value;
  
-    totalHitsNum = Number(await fetchImagesLogic());
-    hitsLeft = totalHitsNum;
+    searchData = await fetchImagesLogic();
+    hitsLeft = searchData.totalHits;
+    console.log(searchData.totalHits);
+
     if (hitsLeft < 40) {
       noMoreLoads.classList.replace("hidden", "visible");
       loadMore.classList.replace("visible", "hidden");
     }
   
+    if (searchData.totalHits === 0) {
+      galleryContainer.classList.add("hidden");
+      noMoreLoads.classList.replace("visible", "hidden");
+      loadMore.classList.replace("visible", "hidden");
+      /*
+      "Sorry, there are no images matching your search query. Please try again."
+      */
+    }
+    else {
+      galleryContainer.classList.remove("hidden");
+    }
+
     searchForm.reset();
   }
   catch {
@@ -48,11 +63,14 @@ async function loadMoreFunc() {
   try {
     pageNum += 1;
     hitsLeft -= 40;
+
     if (hitsLeft < 40) {
       noMoreLoads.classList.replace("hidden", "visible");
       loadMore.classList.replace("visible", "hidden");
       perPageNum = hitsLeft;
     }
+
+    console.log(hitsLeft);
 
     await fetchImagesLogic();
   }
@@ -65,12 +83,6 @@ async function fetchImagesLogic() {
   let data = await fetchImages(searchInputValue);
 
   let photoCards = "";
-
-  if (data.hits.length === 0) {
-    /*
-    "Sorry, there are no images matching your search query. Please try again."
-    */
-  }
 
   data.hits.forEach (hit => {
     photoCards += `<a href="${hit.largeImageURL}">
@@ -104,7 +116,7 @@ async function fetchImagesLogic() {
 
   instance.refresh();
 
-  return await data.totalHits;
+  return await data;
 }
 
 async function fetchImages(searchResult) {
