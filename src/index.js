@@ -48,9 +48,6 @@ async function searchFormFunc(e) {
       loadMore.classList.replace("visible", "hidden");
       
       Notify.failure("Sorry, there are no images matching your search query. Please try again.");
-      /*
-      "Sorry, there are no images matching your search query. Please try again."
-      */
     }
     else {
       galleryContainer.classList.remove("hidden");
