@@ -73,16 +73,16 @@ async function fetchImagesLogic() {
           <img src="${hit.previewURL}" alt="Image" loading="lazy" data-imgInfo="${hit.likes} Likes, ${hit.views} Views, ${hit.comments} Comments, ${hit.downloads} Downloads" />
           <div class="info">
               <p class="info-item">
-                <b>Likes${hit.likes}</b>
+                <b>Likes</b><b>${hit.likes}</b>
               </p>
               <p class="info-item">
-                <b>Views${hit.views} </b>
+                <b>Views</b><b>${hit.views}</b>
               </p>
               <p class="info-item">
-                <b>Comments${hit.comments}</b>
+                <b>Comments</b><b>${hit.comments}</b>
               </p>
               <p class="info-item">
-                <b>Downloads${hit.downloads} </b>
+                <b>Downloads</b><b>${hit.downloads} </b>
               </p>
             </div>
         </div></a>`;

@@ -1,3 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Parisienne&display=swap');
+
+body {
+    font-family: "Parisienne";
+    font-size: 20px;
+}
+
+
 .hidden {
     display: none;
 } 
@@ -6,12 +14,15 @@
     display: block;
 }
 
+
+
 .photo-card {
     width: 350px;
 }
 
 a {
     text-decoration: none;
+
 }
 
 img {
@@ -22,13 +33,13 @@ img {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
+    color: darkblue;
 }
 
 .info-item {
-    width: 50px;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
     text-align: center;
 }
