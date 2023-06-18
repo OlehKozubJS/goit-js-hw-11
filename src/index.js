@@ -4,69 +4,124 @@ import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
 
 var API_KEY = '37447910-ed3fb6b843fd00e4ff71a16f5';
-var URL = "https://pixabay.com/api/?key="+API_KEY+"&q=searchResult&image_type=photo&orientation=horizontal&safesearch=true";
+var URL = "https://pixabay.com/api/?key="+API_KEY+"&q=searchResult&image_type=photo&orientation=horizontal&safesearch=true&page=pageNum&per_page=perPage";
 
 const searchForm = document.querySelector(".search-form");
 const searchInput = document.getElementsByName("searchQuery")[0];
 const gallery = document.querySelector(".gallery");
+const loadMore = document.querySelector(".load-more");
+const noMoreLoads = document.querySelector(".no-more-loads");
 
-searchForm.addEventListener("submit", fetchImagesLogic);
+let pageNum = 1;
+let searchInputValue;
+let perPageVar = 40;
+let totalHitsVar;
+let hitsLeft;
 
-async function fetchImagesLogic(e) {
-  e.preventDefault();
+searchForm.addEventListener("submit", searchFormFunc);
+loadMore.addEventListener("click", loadMoreFunc);
 
+async function searchFormFunc(e) {
   try {
-    gallery.innerHTML = "";
+    e.preventDefault();
 
-    const data = await fetchImages(searchInput.value);
-    console.log(data);
-    data.hits.forEach (hit => {
-      const newPhotoCard = `
-        <div class="photo-card">
-            <img img src="${hit.previewURL}" alt="Image" loading="lazy" />
-            <div class="info">
-                <p class="info-item">
-                  <b>${hit.likes} Likes</b>
-                </p>
-                <p class="info-item">
-                  <b>${hit.views} Views</b>
-                </p>
-                <p class="info-item">
-                  <b>${hit.comments} Comments</b>
-                </p>
-                <p class="info-item">
-                  <b>${hit.downloads} Downloads</b>
-                </p>
-              </div>
-          </div>`;
-      gallery.insertAdjacentHTML("beforeend", newPhotoCard);
-    });
+    loadMore.classList.replace("hidden", "visible");
+    noMoreLoads.classList.replace("visible", "hidden");
+    perPageVar = 40;
+    pageNum = 1;
+
+    searchInputValue = searchInput.value;
+ 
+    totalHitsVar = Number(await fetchImagesLogic());
+    hitsLeft = totalHitsVar;
+    if (hitsLeft < 40) {
+      noMoreLoads.classList.replace("hidden", "visible");
+      loadMore.classList.replace("visible", "hidden");
+    }
+  
+    searchForm.reset();
   }
   catch {
     console.log("Error!");
   }
+}
+
+async function loadMoreFunc() {
+  try {
+    pageNum += 1;
+    hitsLeft -= 40;
+    if (hitsLeft < 40) {
+      noMoreLoads.classList.replace("hidden", "visible");
+      loadMore.classList.replace("visible", "hidden");
+      perPageVar = hitsLeft;
+    }
+
+    await fetchImagesLogic();
+  }
+  catch {
+    console.log("Error!");
+  }
+}
+
+async function fetchImagesLogic() {
+  gallery.innerHTML = "";
+
+  let data = await fetchImages(searchInputValue);
+  console.log(data);
+
+  data.hits.forEach (hit => {
+    const newPhotoCard = `<a href="${hit.largeImageURL}">
+      <div class="photo-card">
+          <img img src="${hit.previewURL}" alt="Image" loading="lazy" data-imgInfo="${hit.likes} Likes, ${hit.views} Views, ${hit.comments} Comments, ${hit.downloads} Downloads" />
+          <div class="info">
+              <p class="info-item">
+                <b>${hit.likes} Likes</b>
+              </p>
+              <p class="info-item">
+                <b>${hit.views} Views</b>
+              </p>
+              <p class="info-item">
+                <b>${hit.comments} Comments</b>
+              </p>
+              <p class="info-item">
+                <b>${hit.downloads} Downloads</b>
+              </p>
+            </div>
+        </div></a>`;
+    gallery.insertAdjacentHTML("beforeend", newPhotoCard);
+  });
     
-  searchForm.reset();
+  let instance = new SimpleLightbox('.gallery a', 
+    {
+        captionsData: "data-imgInfo",
+        captionDelay: 250,
+        disableScroll: false,
+    }
+  );
+
+  instance.refresh();
+
+  return await data.totalHits;
 }
 
 async function fetchImages(searchResult) {
-  const response = await fetch(URL.replace("searchResult", encodeURIComponent(searchResult)));
+  searchData = URL.replace("searchResult", encodeURIComponent(searchResult));
+  searchData = searchData.replace("pageNum", pageNum + "");
+  searchData = searchData.replace("perPage", perPageVar);
+
+  const response = await fetch(searchData);
   return await response.json();
 }
-
+/*
 const { height: cardHeight } = document.querySelector(".gallery").firstElementChild.getBoundingClientRect();
 
 window.scrollBy({
   top: cardHeight * 2,
   behavior: "smooth",
 });
-
-/*
-let instance = new SimpleLightbox('.gallery a', 
-    {
-        captionsData: "alt",
-        captionDelay: 250,
-        disableScroll: false,
-    }
-);
 */
+
+/**
+ * "We're sorry, but you've reached the end of search results."
+ */
+
