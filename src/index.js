@@ -66,6 +66,12 @@ async function fetchImagesLogic() {
 
   let photoCards = "";
 
+  if (data.hits.length === 0) {
+    /*
+    "Sorry, there are no images matching your search query. Please try again."
+    */
+  }
+
   data.hits.forEach (hit => {
     photoCards += `<a href="${hit.largeImageURL}">
       <div class="photo-card">

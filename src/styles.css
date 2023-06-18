@@ -22,8 +22,6 @@ header, main, footer {
 /* Header (search form) settings */
 
 form {
-    margin-block: 25px;
-
     width: 500px;
     margin-inline: auto;
 
