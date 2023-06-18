@@ -20,6 +20,7 @@
   "dependencies": {
     "async": "^3.2.4",
     "modern-normalize": "^1.1.0",
+    "notiflix": "^3.2.6",
     "simplelightbox": "^2.14.1"
   },
   "devDependencies": {

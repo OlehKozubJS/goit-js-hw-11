@@ -1,6 +1,8 @@
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
 
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
+
 let API_KEY = '37447910-ed3fb6b843fd00e4ff71a16f5';
 let URL = "https://pixabay.com/api/?";
 
@@ -44,6 +46,8 @@ async function searchFormFunc(e) {
       galleryContainer.classList.add("hidden");
       noMoreLoads.classList.replace("visible", "hidden");
       loadMore.classList.replace("visible", "hidden");
+      
+      Notify.failure("Sorry, there are no images matching your search query. Please try again.");
       /*
       "Sorry, there are no images matching your search query. Please try again."
       */
