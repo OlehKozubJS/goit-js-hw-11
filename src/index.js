@@ -49,7 +49,6 @@ async function searchFormFunc(e) {
       
       Notify.failure("Sorry, there are no images matching your search query. Please try again.");
     }
-
     else {
       galleryContainer.classList.remove("hidden");
     }
