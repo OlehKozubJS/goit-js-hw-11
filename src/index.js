@@ -1,6 +1,6 @@
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
-
+import axios from "axios";
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 let API_KEY = '37447910-ed3fb6b843fd00e4ff71a16f5';
@@ -131,7 +131,9 @@ async function fetchImages(searchResult) {
     per_page: perPageNum,
   });
 
-  const response = await fetch(URL + searchParams);
-  return await response.json();
+  const response = await axios.get(URL + searchParams);
+  //const response = await fetch(URL + searchParams);
+
+  return await response.data;
 }
 
