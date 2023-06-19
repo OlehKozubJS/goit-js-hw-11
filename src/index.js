@@ -135,7 +135,6 @@ async function fetchImages(searchResult) {
   });
 
   const response = await axios.get(URL + searchParams);
-  //const response = await fetch(URL + searchParams);
 
   return await response.data;
 }
