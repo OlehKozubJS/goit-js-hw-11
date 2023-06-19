@@ -26,6 +26,7 @@ async function searchFormFunc(e) {
   try {
     e.preventDefault();
 
+    gallery.innerHTML = "";
     perPageNum = 40;
     pageNum = 1;
     searchInputValue = searchInput.value;
@@ -68,13 +69,8 @@ async function loadMoreFunc() {
     if (hitsLeft < 40) {
       noMoreLoads.classList.replace("hidden", "visible");
       loadMore.classList.replace("visible", "hidden");
-      perPageNum += hitsLeft;
+      perPageNum = hitsLeft;
     }
-    else {
-      perPageNum += 40;
-    }
-
-    console.log(perPageNum);
 
     await fetchImagesLogic();
   }
@@ -86,29 +82,29 @@ async function loadMoreFunc() {
 async function fetchImagesLogic() {
   let data = await fetchImages(searchInputValue);
 
-  let photoCards = "";
-
-  data.hits.forEach (hit => {
-    photoCards += `<a href="${hit.largeImageURL}">
+  let newHits = data.hits.map(hit => 
+    `<a href="${hit.largeImageURL}">
       <div class="photo-card">
-          <img src="${hit.previewURL}" alt="Image" loading="lazy" data-imgInfo="${hit.likes} Likes, ${hit.views} Views, ${hit.comments} Comments, ${hit.downloads} Downloads" />
-          <div class="info">
-              <p class="info-item">
-                <b>Likes</b><b>${hit.likes}</b>
-              </p>
-              <p class="info-item">
-                <b>Views</b><b>${hit.views}</b>
-              </p>
-              <p class="info-item">
-                <b>Comments</b><b>${hit.comments}</b>
-              </p>
-              <p class="info-item">
-                <b>Downloads</b><b>${hit.downloads} </b>
-              </p>
-            </div>
-        </div></a>`;
-    gallery.innerHTML = photoCards;
-  });
+        <img src="${hit.previewURL}" alt="Image" loading="lazy" data-imgInfo="${hit.likes} Likes, ${hit.views} Views, ${hit.comments} Comments, ${hit.downloads} Downloads" />
+        <div class="info">
+          <p class="info-item">
+            <b>Likes</b><b>${hit.likes}</b>
+          </p>
+          <p class="info-item">
+            <b>Views</b><b>${hit.views}</b>
+          </p>
+          <p class="info-item">
+            <b>Comments</b><b>${hit.comments}</b>
+          </p>
+          <p class="info-item">
+            <b>Downloads</b><b>${hit.downloads} </b>
+          </p>
+        </div>
+      </div>
+    </a>`
+  );
+
+  gallery.insertAdjacentHTML("beforeend", newHits.join(" "));
     
   let instance = new SimpleLightbox('.gallery a', 
     {
