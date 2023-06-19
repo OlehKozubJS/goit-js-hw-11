@@ -68,10 +68,13 @@ async function loadMoreFunc() {
     if (hitsLeft < 40) {
       noMoreLoads.classList.replace("hidden", "visible");
       loadMore.classList.replace("visible", "hidden");
-      perPageNum = hitsLeft;
+      perPageNum += hitsLeft;
+    }
+    else {
+      perPageNum += 40;
     }
 
-    console.log(hitsLeft);
+    console.log(perPageNum);
 
     await fetchImagesLogic();
   }
