@@ -22,6 +22,14 @@ let hitsLeft;
 searchForm.addEventListener("submit", searchFormFunc);
 loadMore.addEventListener("click", loadMoreFunc);
 
+let instance = new SimpleLightbox('.gallery a', 
+  {
+    captionsData: "data-imgInfo",
+    captionDelay: 250,
+    disableScroll: false,
+  }
+);
+
 async function searchFormFunc(e) {
   try {
     e.preventDefault();
@@ -104,15 +112,7 @@ async function fetchImagesLogic() {
   );
 
   gallery.insertAdjacentHTML("beforeend", newHits.join(" "));
-    
-  let instance = new SimpleLightbox('.gallery a', 
-    {
-        captionsData: "data-imgInfo",
-        captionDelay: 250,
-        disableScroll: false,
-    }
-  );
-
+  
   instance.refresh();
 
   return await data;
